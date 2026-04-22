@@ -1,0 +1,7 @@
+DB_HOST='your Aiven host'
+DB_USER='your Aiven username, probably "avnadmin"'
+DB_PASSWORD='your Aiven password'
+DB_PORT='your Aiven port'
+DB_DIALECT='mysql'
+DB_NAME='your Aiven database name, probably "defaultdb"'
+PORT='3000'
