@@ -17,6 +17,25 @@ class GenreService {
         return this.Genre.create({ description })
     }
 
+    async populateWithSeedData() {
+        const { count } = await this.Genre.findAndCountAll()
+        console.log(`${count} genres.`)
+
+        if (count === 0) {
+            return await this.Genre.bulkCreate([
+                { description: 'Metal' },
+                { description: 'Folk' },
+                { description: 'Hiphop' },
+                { description: 'Pop' },
+                { description: 'Jazz' },
+                { description: 'Classical' },
+                { description: 'Deathcore' },
+            ])
+        }
+
+        return null // no DB population happened
+    }
+
     async updateGenre(id, description) {
         return this.Genre.update({ description }, { where: { id } })
     }

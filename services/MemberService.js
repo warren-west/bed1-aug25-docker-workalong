@@ -18,10 +18,11 @@ class MemberService {
 
     // un-tested
     async populateWithSeedData() {
-        const { countMember } = await this.Member.findAndCountAll()
-        
-        if (countMember === 0) {
-            await db.Member.bulkCreate([
+        const { count } = await this.Member.findAndCountAll()
+        console.log(`${count} members.`)
+
+        if (count === 0) {
+            return await this.Member.bulkCreate([
                 { fullname: "Lars Ulrik", mainInstrument: "Drums", BandId: 1 },
                 { fullname: "James Mattfield", mainInstrument: "Vocals", BandId: 1 },
                 { fullname: "Kirk Hammet", mainInstrument: "Guitar", BandId: 1 },
@@ -32,6 +33,7 @@ class MemberService {
                 { fullname: "Matt Nicholls", mainInstrument: "Drums", BandId: 13 },
             ])
         }
+        return null // no DB population happened
     }
 
     async updateMember(id, fullname, bandId, mainInstrument) {
