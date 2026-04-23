@@ -1,10 +1,12 @@
 const router = require('express').Router()
 const db = require('../models')
+const GenreService = require('../services/GenreService')
+const genreService = new GenreService(db)
 
 // GET /genres
 router.get('/', async (req, res) => {
     try {
-        const result = await db.Genre.findAll({ include: db.Band })
+        const result = await genreService.getAllGenres()
 
         // check for 404 error
         if (!result || result.length === 0) {
@@ -33,7 +35,7 @@ router.get('/:id', async (req, res) => {
             return
         }
 
-        const result = await db.Genre.findByPk(id, { include: db.Band })
+        const result = await genreService.getGenreById(id)
 
         // check for 404
         if (!result) {
@@ -49,6 +51,29 @@ router.get('/:id', async (req, res) => {
         res.status(500).json({ status: 'error', message: 'Server error.' })
         return
     }
+})
+
+// POST /genres
+router.post('/', async (req, res) => {
+    const { description } = req.body
+
+    // validate description
+    if (!description) {
+        res.status(400).json({ status: 'fail', message: 'Invalid genre description.' })
+        return
+    }
+
+    try {
+        const result = await genreService.addGenre(description)
+
+        res.status(201).json({ status: 'success', data: result })
+        return
+
+    } catch (error) {
+        res.status(500).json({ status: 'error', message: 'Server error.' })
+        return
+    }
+
 })
 
 // other CRUD

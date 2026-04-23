@@ -44,21 +44,8 @@ router.post('/', async (req, res) => {
             message += `\nBand table populated with data. ✅`
         }
         
-        const { countMember } = await db.Member.findAndCountAll()
         
-        if (countMember === 0) {
-            await db.Member.bulkCreate([
-                { fullname: "Lars Ulrik", mainInstrument: "Drums", BandId: 1 },
-                { fullname: "James Mattfield", mainInstrument: "Vocals", BandId: 1 },
-                { fullname: "Kirk Hammet", mainInstrument: "Guitar", BandId: 1 },
-                { fullname: "Robert Rohiho", mainInstrument: "Guitar", BandId: 1 },
-                { fullname: "Mitch Lucker", mainInstrument: "Vocals", BandId: 12 },
-                { fullname: "Alex", mainInstrument: "Drums", BandId: 12 },
-                { fullname: "Oli Sykes", mainInstrument: "Vocals", BandId: 13 },
-                { fullname: "Matt Nicholls", mainInstrument: "Drums", BandId: 13 },
-            ])
-            message += `\nMember table populated with data. ✅`
-        }
+        
         res.status(201).json({ status: 'success', message })
         return
 

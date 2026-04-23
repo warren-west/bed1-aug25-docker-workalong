@@ -1,10 +1,12 @@
 const router = require('express').Router()
 const db = require('../models')
+const MemberService = require('../services/MemberService')
+const memberService = new MemberService(db)
 
 // GET /members
 router.get('/', async (req, res) => {
     try {
-        const result = await db.Member.findAll({ include: db.Band })
+        const result = await memberService.getAllMembers()
 
         // check for 404 error
         if (!result || result.length === 0) {
@@ -33,7 +35,7 @@ router.get('/:id', async (req, res) => {
             return
         }
         
-        const result = await db.Member.findByPk(id, { include: db.Band })
+        const result = await memberService.getMemberById(id)
         
         // check for 404
         if (!result) {

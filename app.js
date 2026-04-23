@@ -23,13 +23,14 @@ const bandsRouter = require('./routes/bands')
 const membersRouter = require('./routes/members')
 const genresRouter = require('./routes/genres')
 
+// middleware
+app.use(express.json()) // read json data from req.body
 // connect routes
 app.use('/students', studentRouter)
 app.use('/populate', populateRouter)
 app.use('/bands', bandsRouter)
 app.use('/members', membersRouter)
 app.use('/genres', genresRouter)
-// middleware
 
 const port = process.env.PORT || '3000'
 
