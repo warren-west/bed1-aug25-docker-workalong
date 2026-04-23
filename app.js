@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 
@@ -29,6 +30,8 @@ app.use('/bands', bandsRouter)
 app.use('/members', membersRouter)
 app.use('/genres', genresRouter)
 // middleware
+
+const port = process.env.PORT || '3000'
 
 // let server listen
 app.listen(3000, () => {

@@ -1,10 +1,14 @@
 const router = require('express').Router()
 const db = require('../models')
+const BandService = require('../services/BandService')
+const bandService = new BandService(db)
 
 // GET /bands
 router.get('/', async (req, res) => {
     try {
-        const result = await db.Band.findAll({ include: [ db.Member, db.Genre ] })
+        const { GenreId, name } = req.query
+
+        const result = await bandService.getAllBands(GenreId, name)
 
         // check for 404 error
         if (!result || result.length === 0) {
@@ -17,7 +21,7 @@ router.get('/', async (req, res) => {
         return
 
     } catch (error) {
-        res.status(500).json({ status: 'error', message: 'Server error.' })
+        res.status(500).json({ status: 'error', message: error.message })
         return
     }
 })
@@ -33,7 +37,7 @@ router.get('/:id', async (req, res) => {
             return
         }
 
-        const result = await db.Band.findByPk(id, { include: [ db.Member, db.Genre ] })
+        const result = await bandService.getBandById(id)
 
         // check for 404
         if (!result) {
