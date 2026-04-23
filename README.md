@@ -19,12 +19,18 @@ npm test
 
 ## Endpoints
 
+**`Populate DB with Seed Data`:**
+- `POST` `/populate`: Inserts Genre, Band, and Member records into the DB.
+
 **`Genre`:**
 - `GET` `/genres`: Fetches all Genre records.
 - `GET` `/genres/:id`: Fetches a single Genre record by ID.
 
 **`Band`:**
 - `GET` `/bands`: Fetches all Band records.
+- `GET` `/bands?GenreId=4`: Fetches all Band records within a specified `Genre`.
+- `GET` `/bands?name=Ariana`: Fetches all Band records partially matching a `name`.
+- `GET` `/bands?GenreId=4&name=an`: Fetches all Band records filtered by `Genre` and `name`.
 - `GET` `/bands/:id`: Fetches a single Band record by ID.
 
 **`Member`:**
