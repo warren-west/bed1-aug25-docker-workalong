@@ -22,6 +22,7 @@ const populateRouter = require('./routes/populate')
 const bandsRouter = require('./routes/bands')
 const membersRouter = require('./routes/members')
 const genresRouter = require('./routes/genres')
+const authRouter = require('./routes/auth')
 
 // middleware
 app.use(express.json()) // read json data from req.body
@@ -31,6 +32,28 @@ app.use('/populate', populateRouter)
 app.use('/bands', bandsRouter)
 app.use('/members', membersRouter)
 app.use('/genres', genresRouter)
+app.use('/auth', authRouter)
+
+app.get('/', (req, res) => {
+    res.json({
+        status: 'success',
+        routes: [
+            { method: 'POST', endpoint: '/populate' },
+            { method: 'POST', endpoint: '/auth/register' },
+            { method: 'POST', endpoint: '/auth/login' },
+            { method: 'GET', endpoint: '/genres' },
+            { method: 'GET', endpoint: '/genres/:id' },
+            { method: 'GET', endpoint: '/bands' },
+            { method: 'GET', endpoint: '/bands?GenreId=4' },
+            { method: 'GET', endpoint: '/bands?name=Ariana' },
+            { method: 'GET', endpoint: '/bands?GenreId=4&name=Ariana' },
+            { method: 'GET', endpoint: '/bands/:id' },
+            { method: 'GET', endpoint: '/members' },
+            { method: 'GET', endpoint: '/members/:id' },
+        ]
+    })
+    return
+})
 
 const port = process.env.PORT || '3000'
 

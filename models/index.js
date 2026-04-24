@@ -58,6 +58,44 @@ db.Genre = sequelize.define("Genre", {
     timestamps: false
 })
 
+// Create a User model, without any associations
+db.User = sequelize.define("User", {
+    username: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+        unique: true,
+        validate: { // Sequelize validators are great
+            len: {
+                args: [4, 100],
+                msg: 'Username should be between 4 and 100 characters long.'
+            } 
+        }
+    },
+    email: {
+        type: DataTypes.STRING(100),
+        unique: true,
+        validate: {
+            isEmail: {
+                args: true,
+                msg: 'Email is not a valid email address.'
+            }
+        }
+    },
+    password: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+        validate: {
+            len: [4, 100] // you can set a min length for a password
+        }
+    },
+    role: {
+        type: DataTypes.ENUM(['ADMIN', 'MEMBER']), // enumerator [0: ADMIN, 1: MEMBER]
+        defaultValue: "MEMBER",
+        allowNull: false
+    }
+}, {
+    timestamps: false
+})
 
 // Set up associations
 // 1-m (Band-Member)

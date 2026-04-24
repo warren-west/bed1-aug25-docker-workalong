@@ -2,6 +2,7 @@ const router = require('express').Router()
 const db = require('../models')
 const GenreService = require('../services/GenreService')
 const genreService = new GenreService(db)
+const { isAdmin, isLoggedIn } = require('../middleware/authMiddleware')
 
 // GET /genres
 router.get('/', async (req, res) => {
@@ -25,7 +26,7 @@ router.get('/', async (req, res) => {
 })
 
 // GET /genres/:id
-router.get('/:id', async (req, res) => {
+router.get('/:id', isLoggedIn, async (req, res) => {
     const { id } = req.params
 
     try {
