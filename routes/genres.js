@@ -3,9 +3,10 @@ const db = require('../models')
 const GenreService = require('../services/GenreService')
 const genreService = new GenreService(db)
 const { isAdmin, isLoggedIn } = require('../middleware/authMiddleware')
+const { basicAuth } = require('../middleware/basicMiddleware')
 
 // GET /genres
-router.get('/', async (req, res) => {
+router.get('/', isLoggedIn, async (req, res) => {
     try {
         const result = await genreService.getAllGenres()
 

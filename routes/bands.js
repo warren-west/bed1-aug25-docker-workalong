@@ -56,5 +56,24 @@ router.get('/:id', async (req, res) => {
 })
 
 // other CRUD
+router.post('/', async (req, res) => {
+    const { name, GenreId } = req.body
+
+    if (!name || !GenreId) {
+        res.status(400).json({ status: 'fail', message: 'Need new band name and genre ID.' })
+        return
+    }
+
+    try {
+        const result = await bandService.createBand(name, GenreId)
+
+        res.status(201).json({ status: 'success', data: result })
+        return
+
+    } catch (error) {
+        res.status(500).json({ status: 'error', message: 'Internal server error.' })
+        return
+    }
+})
 
 module.exports = router

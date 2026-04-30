@@ -12,8 +12,8 @@ class MemberService {
         return this.Member.findByPk(id, { include: this.db.Band })
     }
 
-    async createMember(fullname, bandId, mainInstrument) {
-        return this.Member.create({ fullname, bandId, mainInstrument })
+    async createMember(fullname, BandId, mainInstrument) {
+        return this.Member.create({ fullname, BandId, mainInstrument })
     }
 
     // un-tested
@@ -26,7 +26,7 @@ class MemberService {
                 { fullname: "Lars Ulrik", mainInstrument: "Drums", BandId: 1 },
                 { fullname: "James Mattfield", mainInstrument: "Vocals", BandId: 1 },
                 { fullname: "Kirk Hammet", mainInstrument: "Guitar", BandId: 1 },
-                { fullname: "Robert Rohiho", mainInstrument: "Guitar", BandId: 1 },
+                { fullname: "Robert Trujillo", mainInstrument: "Guitar", BandId: 1 },
                 { fullname: "Mitch Lucker", mainInstrument: "Vocals", BandId: 12 },
                 { fullname: "Alex", mainInstrument: "Drums", BandId: 12 },
                 { fullname: "Oli Sykes", mainInstrument: "Vocals", BandId: 13 },

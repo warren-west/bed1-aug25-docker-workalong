@@ -34,9 +34,9 @@ router.get('/:id', async (req, res) => {
             res.status(400).json({ status: 'fail', message: 'Invalid member ID.' })
             return
         }
-        
+
         const result = await memberService.getMemberById(id)
-        
+
         // check for 404
         if (!result) {
             res.status(404).json({ status: 'fail', message: `No members found with ID ${id}.` })
@@ -54,5 +54,43 @@ router.get('/:id', async (req, res) => {
 })
 
 // other CRUD
+router.post('/', async (req, res) => {
+    const { fullname, mainInstrument, BandId } = req.body
+
+    if (!fullname || !mainInstrument || !BandId) {
+        res.status(400).json({ status: 'fail', message: 'Need new member name, main instrument, and band ID.' })
+        return
+    }
+
+    try {
+        const result = await memberService.createMember(fullname, BandId, mainInstrument)
+
+        res.status(201).json({ status: 'success', data: result })
+        return
+
+    } catch (error) {
+        res.status(500).json({ status: 'error', message: 'Internal server error.' })
+        return
+    }
+})
+
+router.delete('/:id', async (req, res) => {
+    try {
+        const { id } = req.params
+
+        if (!id || isNaN(id)) {
+            res.status(400).json({ status: 'fail', message: "Invalid member ID" })
+            return
+        }
+
+        const result = await memberService.deleteMember(id)
+        res.json({ status: 'success', message: 'Member successfully deleted.' })
+        return
+    } catch (error) {
+        res.status(500).json({ status: 'error', message: 'Internal server error.' })
+        return
+    }
+
+})
 
 module.exports = router

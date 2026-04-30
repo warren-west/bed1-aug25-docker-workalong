@@ -1,5 +1,6 @@
 require('dotenv').config()
 const express = require('express')
+const cors = require('cors')
 const app = express()
 
 const db = require('./models') // import the db wrapper object
@@ -25,6 +26,7 @@ const genresRouter = require('./routes/genres')
 const authRouter = require('./routes/auth')
 
 // middleware
+app.use(cors()) // enable CORS (Cross-Origin Resource Sharing)
 app.use(express.json()) // read json data from req.body
 // connect routes
 app.use('/students', studentRouter)
